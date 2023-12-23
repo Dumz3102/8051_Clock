@@ -1,0 +1,106 @@
+C51 COMPILER V9.52.0.0   MAIN                                                              09/06/2023 16:16:55 PAGE 1   
+
+
+C51 COMPILER V9.52.0.0, COMPILATION OF MODULE MAIN
+OBJECT MODULE PLACED IN main.OBJ
+COMPILER INVOKED BY: C:\Keil\C51\BIN\C51.EXE main.c BROWSE DEBUG OBJECTEXTEND TABS(2)
+
+line level    source
+
+   1          #include<regx52.h>
+   2          #include"..\Lib\Delay.h"
+   3          
+   4          // Khai bao LED 7 doan
+   5          unsigned char code Code7Seg[] = {0xC0, 0xF9, 0xA4, 0xB0, 0x99, 0x92, 0x82, 0xF8, 0x80, 0x90};
+   6          
+   7          // Khai bao chan
+   8          #define LED_PORT P2
+   9          sbit LEDG1_PIN = P3^0;  //Led gio 1
+  10          sbit LEDG2_PIN = P3^1;  //Led gio 2
+  11          sbit LEDP1_PIN = P3^2;  //Led phut 1
+  12          sbit LEDP2_PIN = P3^3;  //Led phut 2
+  13          sbit LEDGY1_PIN = P3^4; //Led giay 1
+  14          sbit LEDGY2_PIN = P3^5; //Led giay 2
+  15          
+  16          void main(){
+  17   1           // Khai bao bien 
+  18   1           unsigned char gio,phut,giay;
+  19   1           unsigned char chuc,dvi;
+  20   1           unsigned int i;
+  21   1           gio = phut = giay = 0;
+  22   1      
+  23   1           while(1){
+  24   2             
+  25   2           for(i = 0;i<166;i++){   
+  26   3             //Hien thi gio
+  27   3             chuc = gio/10;
+  28   3             dvi  = gio%10;
+  29   3             //Hien thi led 1
+  30   3             LED_PORT = Code7Seg[chuc];
+  31   3             LEDG1_PIN = 0;
+  32   3             Delay_ms(1);
+  33   3             LEDG1_PIN = 1;
+  34   3             //Hien thi led 2
+  35   3             LED_PORT = Code7Seg[dvi];
+  36   3             LEDG2_PIN = 0;
+  37   3             Delay_ms(1);
+  38   3             LEDG2_PIN = 1;
+  39   3             
+  40   3             //Hien thi phut
+  41   3             chuc = phut/10;
+  42   3             dvi  = phut%10;
+  43   3             //Hien thi led 1
+  44   3             LED_PORT = Code7Seg[chuc];
+  45   3             LEDP1_PIN = 0;
+  46   3             Delay_ms(1);
+  47   3             LEDP1_PIN = 1;
+  48   3             //Hien thi led 2
+  49   3             LED_PORT = Code7Seg[dvi];
+  50   3             LEDP2_PIN = 0;
+  51   3             Delay_ms(1);
+  52   3             LEDP2_PIN = 1;  
+  53   3             
+  54   3             //Hien thi giay
+  55   3             chuc = giay/10;
+C51 COMPILER V9.52.0.0   MAIN                                                              09/06/2023 16:16:55 PAGE 2   
+
+  56   3             dvi  = giay%10;
+  57   3             //Hien thi led 1
+  58   3             LED_PORT = Code7Seg[chuc];
+  59   3             LEDGY1_PIN = 0;
+  60   3             Delay_ms(1);
+  61   3             LEDGY1_PIN = 1;
+  62   3             //Hien thi led 2
+  63   3             LED_PORT = Code7Seg[dvi];
+  64   3             LEDGY2_PIN = 0;
+  65   3             Delay_ms(1);
+  66   3             LEDGY2_PIN = 1;
+  67   3           }
+  68   2           giay++;
+  69   2           if(giay == 60){
+  70   3             giay = 0; 
+  71   3             phut++;
+  72   3             if(phut == 60){
+  73   4                phut = 0;
+  74   4                gio++;
+  75   4                if(gio == 24){
+  76   5                   gio = 0;
+  77   5                }
+  78   4               }
+  79   3             }
+  80   2           }
+  81   1      }
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =    239    ----
+   CONSTANT SIZE    =     10    ----
+   XDATA SIZE       =   ----    ----
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =   ----       7
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)
